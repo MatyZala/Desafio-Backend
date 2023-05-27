@@ -1,40 +1,17 @@
 import {Router} from "express";
 const router = Router();
-import ProductManager from "../managers/index.js";
+import ProductManager from "../managers/indexProducts.js";
+console.log(process.cwd());
+const productManager = new ProductManager("../src/storage/products.json");
 
-console.log(process.cwd()); //Comando para ver en que directorio estoy
-const productManager = new ProductManager("./src/storage/products.json"); //En base al directorio que estoy, busco el archivo products.json
-
-// let idUnico = data.length + 1;
-// const requeridos = [
-//   "title",
-//   "description",
-//   "code",
-//   "price",
-//   "status",
-//   "stock",
-//   "thumbnail",
-// ];
-
-// const pepe = [{
-//   id: "1",
-//   title: "1",
-//   description: "1",
-//  code: "1",
-//   price: "1",
-//   status: "1",
-//   stock: "1",
-//   thumbnail: "1"
-// }]
 router.get("/products", async (req, res) => {
 
 try {
-  const products = await productManager.getProducts();
-  console.log("Entro");
- console.log(products);
+ const products = await productManager.getProducts();
+//  console.log(products);
   res.render("index", {products});
 }catch (error){
-   res.status(500).send(error);
+   res.status(500).send("Internal server error");
 }
 
 
